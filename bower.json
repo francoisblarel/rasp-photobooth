@@ -7,17 +7,11 @@
   ],
   "description": "photobooth",
   "license": "MIT",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
   "dependencies": {
     "polymer": "Polymer/polymer#^1.0.0",
     "iron-form": "PolymerElements/iron-form#^1.0.0",
     "paper-input": "PolymerElements/paper-input#^1.0.0",
-    "paper-button": "PolymerElements/paper-button#^1.0.0"
+    "paper-button": "PolymerElements/paper-button#^1.0.0",
+    "angular":"1.4.0"
   }
 }
