@@ -1,0 +1,32 @@
+@(photoForm: play.data.Form[model.Photo])
+
+@main("Livre d'or"){
+    <span>formulaire du livre d'or</span>
+
+    <form action=@routes.Application.submitForm() method="post">
+
+        <div>
+            <label for="author">Nom</label>
+            <input type="text" id="author" name="author"/>
+        </div>
+
+        <div>
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email"/>
+        </div>
+
+        <div>
+            <label for="message">Message</label>
+            <textarea name="message" id="message"></textarea>
+        </div>
+
+        <div>
+            <input type="button" value="Prendre une photo"/>
+        </div>
+
+        <div>
+            <button type="submit">Submit</button>
+        </div>
+
+    </form>
+}
