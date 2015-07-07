@@ -3,11 +3,25 @@
 @main("Livre d'or"){
     <span>formulaire du livre d'or</span>
 
+
+    @helper.form(action = routes.Application.submitForm()) {
+
+        @helper.inputText(photoForm("author"))
+
+        @helper.inputPassword(photoForm("message"))
+
+    }
+
+
     <form action=@routes.Application.submitForm() method="post">
 
         <div>
             <label for="author">Nom</label>
-            <input type="text" id="author" name="author"/>
+            <input type="text" id="author" name="author" value=""/>
+        </div>
+
+        <div>
+            <img src='@routes.Assets.at("images/tempPicture.png")' alt="screencapture"/>
         </div>
 
         <div>

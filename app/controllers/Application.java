@@ -1,6 +1,7 @@
 package controllers;
 
 import model.Photo;
+import play.Play;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -15,6 +16,8 @@ import java.io.IOException;
 public class Application extends Controller {
 
     public static final String TEMPFILE = "/tmp/tempfile.png";
+    public static final String TEMPFILE2 = "/public/images/";
+    public static final String TEMP_PICTURE_PNG = "tempPicture.png";
 
     /**
      * Page d'accueil
@@ -35,13 +38,21 @@ public class Application extends Controller {
 //    }
 
     /**
-     * Page de livre d'or sur laquelle on peut prendre une photo et ecrire un message.
+     * Page de livre d'or sur laquelle on peut prendre une photo et écrire un message.
      * @return
      */
     public static Result livreDOr(){
-//        return ok("got request " + request() + "  : name="+ name);
-        Form<Photo> photoForm = Form.form(Photo.class);
+        Photo photo = new Photo();
+        photo.setAuthor("toto");
+        Form<Photo> photoForm = Form.form(Photo.class).fill(photo);
 
+        try {
+            takePictureMock();
+        } catch (AWTException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return ok(views.html.livredor.render(photoForm));
     }
 
@@ -49,12 +60,8 @@ public class Application extends Controller {
 
     public static Result submitForm(){
         Form<Photo> photoForm = Form.form(Photo.class).bindFromRequest();
-        try {
-            takePictureMock();
-        } catch (Exception e) {
-            //TODO
-            e.printStackTrace();
-        }
+        Photo photo = photoForm.get();
+        System.out.println(photo.toString());
         return ok("ok");
     }
 
@@ -72,7 +79,10 @@ public class Application extends Controller {
         Robot robot = new Robot();
         BufferedImage image = robot.createScreenCapture(screenRect);
         // sauvegarde de l'image vers un fichier "png"
-        ImageIO.write(image,"png", new File(TEMPFILE));
+        File publicDir = Play.application().getFile(TEMPFILE2);
+        File file = new File(publicDir.getAbsolutePath() + "/" + TEMP_PICTURE_PNG);
+        ImageIO.write(image,"png", file);
+        System.out.println("Capture screen saved in " + file.getAbsolutePath());
     }
 
 }
