@@ -4,13 +4,11 @@
     <span>formulaire du livre d'or</span>
 
 
-    @helper.form(action = routes.Application.submitForm()) {
 
-        @helper.inputText(photoForm("author"))
 
-        @helper.inputPassword(photoForm("message"))
 
-    }
+
+
 
 
     <form action=@routes.Application.submitForm() method="post">
@@ -21,7 +19,7 @@
         </div>
 
         <div>
-            <img src='@routes.Assets.at("images/tempPicture.png")' alt="screencapture"/>
+            <img src='@routes.Assets.at("images/tempPicture.png")' height="500px" width="850px" alt="screencapture"/>
         </div>
 
         <div>
