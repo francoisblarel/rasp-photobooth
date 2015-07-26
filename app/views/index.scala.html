@@ -1,7 +1,12 @@
 @(message: String)
 
-@main("Welcome to Play") {
+@main("Photobooth") {
 
-    @play20.welcome(message, style = "Java")
+    <span>@message</span>
+    @*TODO aperçu des photos des déjà prises*@
+
+    <form action=@routes.Application.livreDOr() method="get">
+        <input id="go" type="submit" value="Prendre une photo!" onclick="timer()">
+    </form>
 
 }
