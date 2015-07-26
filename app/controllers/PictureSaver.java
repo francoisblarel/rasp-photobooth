@@ -8,6 +8,6 @@ import java.io.IOException;
  */
 public interface PictureSaver {
 
-    void takePicture() throws IOException;
+    void takePicture() throws IOException, InterruptedException;
 
 }

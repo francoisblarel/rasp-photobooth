@@ -3,10 +3,12 @@
 # ~~~~
 
 # Home page
-GET         /                    controllers.Application.index()
+GET         /                    controllers.Application.index(s : String ?= "")
 
 GET         /livredor            controllers.Application.livreDOr()
 POST        /livredor            controllers.Application.submitForm()
+
+GET         /tmpImage            controllers.Application.getTmpImage()
 
 
 #GET        /test/:name          controllers.Application.test1(name)

@@ -2,13 +2,11 @@
 
 @main("Photobooth") {
 
+    <span>@message</span>
+    @*TODO aperçu des photos des déjà prises*@
 
-    <form action=@routes.Application.livreDOr()>
-        <input type="button" value="Take a picture!">
+    <form action=@routes.Application.livreDOr() method="get">
+        <input id="go" type="submit" value="Prendre une photo!" onclick="timer()">
     </form>
 
-    <form is="iron-form" action="" method="post">
-        <paper-input name="name" label="name"></paper-input>
-        <paper-button>Submit</paper-button>
-    </form>
 }

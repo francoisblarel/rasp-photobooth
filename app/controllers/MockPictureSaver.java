@@ -1,7 +1,5 @@
 package controllers;
 
-import play.Play;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -14,8 +12,7 @@ import java.io.IOException;
  */
 public class MockPictureSaver implements PictureSaver {
 
-    public static final String TEMPFILE = "/tmp/tempfile.png";
-    public static final String TEMPFILE2 = "/public/images/";
+    public static final String TEMPFILE = "/public/images/";
     public static final String TEMP_PICTURE_PNG = "tempPicture.png";
 
     @Override
@@ -28,10 +25,9 @@ public class MockPictureSaver implements PictureSaver {
             //creer le screenshot
             Robot robot = new Robot();
             BufferedImage image = robot.createScreenCapture(screenRect);
-            // sauvegarde de l'image vers un fichier "png"
-            File publicDir = Play.application().getFile(TEMPFILE2);
-            File file = new File(publicDir.getAbsolutePath() + "/" + TEMP_PICTURE_PNG);
-            ImageIO.write(image, "png", file);
+            // sauvegarde de l'image vers un fichier "jpg"
+            File file = new File(Constants.TMP_IMG_PATH);
+            ImageIO.write(image, "jpg", file);
             System.out.println("Capture screen saved in " + file.getAbsolutePath());
         }catch (AWTException awt){
             throw new IOException(awt);
