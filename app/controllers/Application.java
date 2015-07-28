@@ -4,6 +4,7 @@ import model.Photo;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import util.Constants;
 import views.html.index;
 
 import javax.imageio.ImageIO;
@@ -13,6 +14,9 @@ import java.io.File;
 import java.io.IOException;
 
 public class Application extends Controller {
+
+    public static final String IMAGE_MIME_TYPE = "image/jpg";
+    private static PhotoService photoService = new PhotoService();
 
     /**
      * Page d'accueil
@@ -28,18 +32,12 @@ public class Application extends Controller {
      * @return
      */
     public static Result livreDOr(){
-        PhotoService photoService = new PhotoService();
         Photo photo = new Photo();
-        photo.setAuthor("anonym");
         Form<Photo> photoForm = Form.form(Photo.class).fill(photo);
         try {
            photoService.takePicture();
-        } catch (IOException e) {
-            //TODO
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            //TODO
-            e.printStackTrace();
+        } catch (IOException | InterruptedException e) {
+            return badRequest(e.getLocalizedMessage());
         }
         return ok(views.html.livredor.render(photoForm));
     }
@@ -49,7 +47,11 @@ public class Application extends Controller {
     public static Result submitForm(){
         Form<Photo> photoForm = Form.form(Photo.class).bindFromRequest();
         Photo photo = photoForm.get();
-        System.out.println(photo.toString());
+        try {
+            photoService.savePicture(photo);
+        } catch (IOException e) {
+            return internalServerError(e.getLocalizedMessage());
+        }
         return index("La photo a bien été enregistrée");
     }
 
@@ -62,10 +64,11 @@ public class Application extends Controller {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(bimage, "jpg", baos);
 
-            return ok(baos.toByteArray()).as("image/jpg");
+            return ok(baos.toByteArray()).as(IMAGE_MIME_TYPE);
         } catch (IOException e) {
             return notFound();
         }
     }
+
 
 }

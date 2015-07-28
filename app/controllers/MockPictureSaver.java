@@ -1,5 +1,7 @@
 package controllers;
 
+import util.Constants;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -8,12 +10,10 @@ import java.io.IOException;
 
 /**
  * @author fblarel
- *         Date: 07/07/15
+ * Date: 07/07/15
  */
 public class MockPictureSaver implements PictureSaver {
 
-    public static final String TEMPFILE = "/public/images/";
-    public static final String TEMP_PICTURE_PNG = "tempPicture.png";
 
     @Override
     public void takePicture() throws IOException {
@@ -33,4 +33,5 @@ public class MockPictureSaver implements PictureSaver {
             throw new IOException(awt);
         }
     }
+
 }
