@@ -4,6 +4,8 @@ import model.Photo;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import service.EmailSender;
+import service.PhotoService;
 import util.Constants;
 import views.html.index;
 
@@ -17,6 +19,8 @@ public class Application extends Controller {
 
     public static final String IMAGE_MIME_TYPE = "image/jpg";
     private static PhotoService photoService = new PhotoService();
+    private static EmailSender emailSender = new EmailSender();
+
 
     /**
      * Page d'accueil
@@ -49,6 +53,7 @@ public class Application extends Controller {
         Photo photo = photoForm.get();
         try {
             photoService.savePicture(photo);
+            emailSender.sendMail(photo.getEmail());
         } catch (IOException e) {
             return internalServerError(e.getLocalizedMessage());
         }

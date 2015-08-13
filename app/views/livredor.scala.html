@@ -2,15 +2,19 @@
 
 @main("Livre d'or"){
 
+
+    <div>
+        <img class="cadre" src="@routes.Assets.at("images/cadre.jpg")"/>
+        <img id="photo" src="@routes.Application.getTmpImage()" alt="screencapture"/>
+    </div>
+
     <form action=@routes.Application.submitForm() method="post">
-
-        <div>
-            <div>
-                @*<img src='@routes.Assets.at("images/tempPicture.png")' height="500px" width="850px" alt="screencapture"/>*@
-                <img src="@routes.Application.getTmpImage()" height="600px" width="800px" alt="screencapture"/>
-            </div>
+        <div class="random-message">
+            <i>Jolie photo non ? Dommage pour la grimace...</i>
         </div>
-
+        <div id="form-title">
+            <i>Une petite signature ?</i>
+        </div>
         <div>
             <div>
                 <label for="author">Nom</label>
@@ -24,16 +28,15 @@
 
             <div>
                 <label for="message">Message</label>
-                <textarea name="message" id="message"></textarea>
+                <textarea name="message" id="message" ></textarea>
             </div>
         </div>
-
-        <a class="" href="@routes.Application.livreDOr()" onclick="timer()">Prendre une autre photo</a>
+        <a class="button" href="@routes.Application.livreDOr()" onclick="timer()">Prendre une autre photo</a>
         <a class="button" href='@routes.Application.index("photo annulée")'>Annuler</a>
-
         <div>
-            <button type="submit">Valider</button>
+            <button class="button" type="submit">Valider</button>
         </div>
-
     </form>
+
+
 }

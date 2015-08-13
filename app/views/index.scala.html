@@ -2,11 +2,19 @@
 
 @main("Photobooth") {
 
-    <span>@message</span>
-    @*TODO aperçu des photos des déjà prises*@
+<div class="container">
+        <span>@message</span>
+        @*TODO aperçu des photos des déjà prises*@
 
-    <form action=@routes.Application.livreDOr() method="get">
-        <input id="go" type="submit" value="Prendre une photo!" onclick="timer()">
-    </form>
+        @*<form action=@routes.Application.livreDOr() method="get">*@
+            @*<input class="button" id="go" type="submit" value="Prendre une photo!" onclick="timer()">*@
+        @*</form>*@
+
+        <div class="buttons">
+            <a class="iphoto" href="@routes.Application.livreDOr()">
+                <img src="@routes.Assets.at("images/photo-icon.png")" height="45px">
+            </a>
+        </div>
+</div>
 
 }
