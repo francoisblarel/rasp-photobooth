@@ -9,10 +9,7 @@ GET         /livredor            controllers.Application.livreDOr()
 POST        /livredor            controllers.Application.submitForm()
 
 GET         /tmpImage            controllers.Application.getTmpImage()
-
-
-#GET        /test/:name          controllers.Application.test1(name)
-#GET        /test2               controllers.Application.test1(name="dfdf")
+GET         /randomText          controllers.Application.getRandomMessage()
 
 
 

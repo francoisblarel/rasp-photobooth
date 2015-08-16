@@ -4,16 +4,17 @@
 
 
     <div class="preview">
-        <img class="cadre" src="@routes.Assets.at("images/cadre.jpg")"/>
+        <img class="cadre" src="@routes.Assets.at("images/cadre2.jpg")"/>
         <img id="photo" src="@routes.Application.getTmpImage()" alt="screencapture"/>
     </div>
 
     <div class="preview-message">
         <div class="random-message">
-            <i>Jolie photo non ? Dommage pour la grimace...</i>
+            <i id="randomText"></i>
+            @*<i>Jolie photo non ? Dommage pour la grimace...</i>*@
         </div>
-        <a class="link" href="@routes.Application.index("photo annulée")">On annule tout, c'est raté!</a>
-        <a class="link" href="#formulaire">Formidable, on garde!</a>
+        <a class="link" id="cancel-link" href="@routes.Application.index("photo annulée")">On annule tout, c'est raté!</a>
+        <a class="link" id="ok-link" href="#formulaire">Formidable, on garde!</a>
     </div>
 
 
@@ -47,4 +48,61 @@
     </form>
 
 
+    <script >
+        document.getElementById("ok-link").focus();
+
+        // get random text
+        var req = new XMLHttpRequest();
+        req.open('GET', '@routes.Application.getRandomMessage()' , true);
+        req.onreadystatechange = function (aEvt) {
+          if (req.readyState == 4) {
+             if(req.status == 200){
+                document.getElementById("randomText").innerHTML = req.responseText;
+             }else{
+                console.log("Erreur pendant le chargement du text random");
+              }
+          }
+        };
+        req.send(null);
+
+
+        // smooth scrolling
+        var targetOffset, currentPosition,
+            body = document.body,
+            button = document.getElementById('ok-link'),
+            animateTime = 800;
+
+        function getPageScroll() {
+          var yScroll;
+
+          if (window.pageYOffset) {
+            yScroll = window.pageYOffset;
+          } else if (document.documentElement && document.documentElement.scrollTop) {
+            yScroll = document.documentElement.scrollTop;
+          } else if (document.body) {
+            yScroll = document.body.scrollTop;
+          }
+          return yScroll;
+        }
+
+        button.addEventListener('click', function (event) {
+
+            targetOffset = document.getElementById(event.target.hash.substr(1)).offsetTop - 230;
+            currentPosition = getPageScroll();
+
+            body.classList.add('in-transition');
+            body.style.WebkitTransform = "translate(0, -" + (targetOffset - currentPosition) + "px)";
+            body.style.MozTransform = "translate(0, -" + (targetOffset - currentPosition) + "px)";
+            body.style.transform = "translate(0, -" + (targetOffset - currentPosition) + "px)";
+
+            window.setTimeout(function () {
+                body.classList.remove('in-transition');
+                body.style.cssText = "";
+                window.scrollTo(0, targetOffset);
+                document.getElementById("author").focus();
+            }, animateTime);
+
+            event.preventDefault();
+        }, false);
+    </script>
 }

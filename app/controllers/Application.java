@@ -6,13 +6,13 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import service.PhotoService;
 import util.Constants;
-import views.html.index;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 public class Application extends Controller {
 
@@ -24,7 +24,7 @@ public class Application extends Controller {
      * @return
      */
     public static Result index(final String message) {
-        return ok(index.render(message));
+        return ok(views.html.index.render(message));
     }
 
 
@@ -44,7 +44,10 @@ public class Application extends Controller {
     }
 
 
-
+    /**
+     * Sauvegarde du formulaire.
+     * @return
+     */
     public static Result submitForm(){
         Form<Photo> photoForm = Form.form(Photo.class).bindFromRequest();
         Photo photo = photoForm.get();
@@ -53,10 +56,14 @@ public class Application extends Controller {
         } catch (IOException e) {
             return internalServerError(e.getLocalizedMessage());
         }
-        return index("La photo a bien été enregistrée");
+        return play.mvc.Results.redirect("/?s=Hop, dans la boite. Merci!");
     }
 
 
+    /**
+     * Retourne l'image temporaire actuelle.
+     * @return
+     */
     public static Result getTmpImage(){
         try {
             File image = new File(Constants.TMP_IMG_PATH);
@@ -69,6 +76,14 @@ public class Application extends Controller {
         } catch (IOException e) {
             return notFound();
         }
+    }
+
+
+    public static Result getRandomMessage(){
+        Random random = new Random();
+
+        String text = Constants.phrases.get(random.nextInt(Constants.phrases.size()));
+        return ok(text).as("text");
     }
 
 
