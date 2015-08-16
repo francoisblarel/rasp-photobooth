@@ -1,7 +1,5 @@
 package model;
 
-import play.data.validation.Constraints;
-
 import java.util.Date;
 
 /**
@@ -11,9 +9,7 @@ import java.util.Date;
 public class Photo {
 
     private String message;
-    @Constraints.Required
     private String author;
-    private byte[] photo;
     private Date date;
     private String email;
 
@@ -32,14 +28,6 @@ public class Photo {
 
     public void setAuthor(String author) {
         this.author = author;
-    }
-
-    public byte[] getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(byte[] photo) {
-        this.photo = photo;
     }
 
     public Date getDate() {
