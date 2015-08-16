@@ -1,6 +1,7 @@
 package service;
 
 import com.dropbox.core.*;
+import play.Logger;
 import play.Play;
 import util.Constants;
 
@@ -26,9 +27,9 @@ public class DropboxService {
         // Connect to Dropbox account.
         client = new DbxClient(config, code);
         try {
-            System.out.println("Linked account: " + client.getAccountInfo().displayName);
+            Logger.info("Linked account: " + client.getAccountInfo().displayName);
         } catch (DbxException e) {
-            System.out.println("No linked account, authentication failed!!");
+            Logger.info("No linked account, authentication failed!!");
         }
     }
 
@@ -42,7 +43,9 @@ public class DropboxService {
 
         try ( FileInputStream inputStream = new FileInputStream(inputFile)) {
             DbxEntry.File uploadedFile = client.uploadFile("/" + pictureName, DbxWriteMode.add(), inputFile.length(), inputStream);
-            System.out.println("Uploaded: " + uploadedFile.toString());
+            Logger.info("Uploaded: " + uploadedFile.toString());
+        }catch (Exception e){
+            Logger.error("Impossible d'uploader sur Dropbox. " + e.getMessage());
         }
     }
 

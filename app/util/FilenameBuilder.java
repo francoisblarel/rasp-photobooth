@@ -1,5 +1,7 @@
 package util;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -9,8 +11,14 @@ import java.time.format.DateTimeFormatter;
  */
 public class FilenameBuilder {
 
-    public static String buildPictureName(final String author){
-        return "/" + LocalDateTime.now().format(DateTimeFormatter.ISO_TIME) + "-" + author + ".jpg";
+    public static final String INCONNU = "inconnu";
+    public static final String FILE_TYPE = "jpg";
+
+    public static String buildPictureName(String author){
+        if(StringUtils.isEmpty(author)){
+            author = INCONNU;
+        }
+        return LocalDateTime.now().format(DateTimeFormatter.ISO_TIME) + "-" + author + "." + FILE_TYPE;
 
     }
 

@@ -1,7 +1,15 @@
 package service;
 
+import model.Photo;
+import org.apache.commons.lang3.StringUtils;
+import play.Logger;
+import play.Play;
 import play.libs.mailer.Email;
 import play.libs.mailer.MailerPlugin;
+import util.Constants;
+import util.FilenameBuilder;
+
+import java.io.File;
 
 /**
  * @author fblarel
@@ -9,17 +17,48 @@ import play.libs.mailer.MailerPlugin;
  */
 public class EmailSender {
 
-    public static final String SUBJECT = "subject";
+    public static final String SUBJECT = "Une nouvelle photo a été prise";
+    public static final String FROM = Play.application().configuration().getString("from.mail");
 
-    public void sendMail(final String dest){
-        Email email = new Email();
+    private static final String ADDR_1 = Play.application().configuration().getString("dest.mail1");
+    private static final String ADDR_2 = Play.application().configuration().getString("dest.mail2");
 
-        email.setSubject(SUBJECT);
-        email.setFrom("fblarel.spam@gmail.com");
-        email.addTo(dest);
-        email.setBodyText("Coucou, voici la photo prise");
+    public void sendMail(final Photo photo){
 
-        MailerPlugin.send(email);
+        try {
+            Email email = new Email();
+            StringBuilder mailContent = new StringBuilder("Hello, Une nouvelle photo a été prise ");
+            final String authorName = photo.getAuthor();
+            final String authorMail = photo.getEmail();
+            final String message = photo.getMessage();
+
+            if(StringUtils.isNotEmpty(authorName)){
+                mailContent.append("par ").append(authorName).append(".");
+            }
+            if(StringUtils.isNotEmpty(message)) {
+                mailContent.append("\n")
+                        .append("Cette personne vous a laissé un petit message : \n\n")
+                        .append(message);
+            }
+            if (StringUtils.isNotEmpty(authorMail)) {
+                mailContent.append("\n")
+                        .append("Son adresse mail :").append("\n").append(authorMail);
+            }
+            mailContent.append("\n").append("Enjoy.");
+
+            email.setSubject(SUBJECT);
+            email.setFrom(FROM);
+
+            email.addTo(ADDR_1);
+            email.addTo(ADDR_2);
+
+            email.setBodyText(mailContent.toString());
+            email.addAttachment(FilenameBuilder.buildPictureName(authorName), new File(Constants.TMP_IMG_PATH));
+
+            MailerPlugin.send(email);
+        } catch (Exception e) {
+            Logger.error("Impossible d'envoyer un email. " + e.getMessage());
+        }
     }
 
 }

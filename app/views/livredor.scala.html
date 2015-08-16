@@ -3,27 +3,34 @@
 @main("Livre d'or"){
 
 
-    <div>
+    <div class="preview">
         <img class="cadre" src="@routes.Assets.at("images/cadre.jpg")"/>
         <img id="photo" src="@routes.Application.getTmpImage()" alt="screencapture"/>
     </div>
 
-    <form action=@routes.Application.submitForm() method="post">
+    <div class="preview-message">
         <div class="random-message">
             <i>Jolie photo non ? Dommage pour la grimace...</i>
         </div>
+        <a class="link" href="@routes.Application.index("photo annulée")">On annule tout, c'est raté!</a>
+        <a class="link" href="#formulaire">Formidable, on garde!</a>
+    </div>
+
+
+
+    <form id="formulaire" action=@routes.Application.submitForm() method="post">
         <div id="form-title">
-            <i>Une petite signature ?</i>
+            <i>Ajouter un petit message pour les mariés ?</i>
         </div>
         <div>
             <div>
                 <label for="author">Nom</label>
-                <input required type="text" id="author" name="author"/>
+                <input type="text" id="author" name="author" placeholder="même si on vous reconnaitra..."/>
             </div>
 
             <div>
                 <label for="email">Email</label>
-                <input type="text" id="email" name="email"/>
+                <input type="text" id="email" name="email" placeholder="pour vous transmettre la photo :)"/>
             </div>
 
             <div>
@@ -31,10 +38,11 @@
                 <textarea name="message" id="message" ></textarea>
             </div>
         </div>
-        <a class="button" href="@routes.Application.livreDOr()" onclick="timer()">Prendre une autre photo</a>
-        <a class="button" href='@routes.Application.index("photo annulée")'>Annuler</a>
         <div>
-            <button class="button" type="submit">Valider</button>
+            <div class="validation-buttons">
+                <button class="link button" type="submit">Juste la photo</button>
+                <button class="link button" type="submit">Ajouter le message</button>
+            </div>
         </div>
     </form>
 

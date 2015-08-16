@@ -1,5 +1,6 @@
 package service;
 
+import play.Logger;
 import play.Play;
 import util.Constants;
 
@@ -21,7 +22,7 @@ public class TempPictureSaver implements PictureSaver {
 
     @Override
     public void takePicture() throws IOException, InterruptedException {
-            Process proc = Runtime.getRuntime().exec(CMD);
+        Process proc = Runtime.getRuntime().exec(CMD);
         proc.waitFor();
 
         Path pathToMove = Paths.get(Constants.TMP_IMG_PATH);
@@ -29,12 +30,12 @@ public class TempPictureSaver implements PictureSaver {
         File toMove = new File("bin/image.jpg");
         Path capture = Paths.get(toMove.getAbsolutePath());
 
-        System.out.println("image capture : " + capture.toString());
-        System.out.println("target : " + pathToMove.toString());
+        Logger.info("image capture : " + capture.toString());
+        Logger.info("target : " + pathToMove.toString());
 
         Files.move(capture, pathToMove, StandardCopyOption.REPLACE_EXISTING);
 
-        System.out.println("Capture screen saved in " + pathToMove.toString());
+        Logger.info("Capture screen saved in " + pathToMove.toString());
 
 
     }

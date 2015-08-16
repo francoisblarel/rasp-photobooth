@@ -1,5 +1,6 @@
 package service;
 
+import play.Logger;
 import util.Constants;
 
 import javax.imageio.ImageIO;
@@ -28,7 +29,7 @@ public class MockPictureSaver implements PictureSaver {
             // sauvegarde de l'image vers un fichier "jpg"
             File file = new File(Constants.TMP_IMG_PATH);
             ImageIO.write(image, "jpg", file);
-            System.out.println("Capture screen saved in " + file.getAbsolutePath());
+            Logger.info("Capture screen saved in " + file.getAbsolutePath());
         }catch (AWTException awt){
             throw new IOException(awt);
         }
