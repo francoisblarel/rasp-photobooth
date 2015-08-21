@@ -5,7 +5,7 @@
 # Home page
 GET         /                    controllers.Application.index(s : String ?= "")
 
-GET         /livredor            controllers.Application.livreDOr()
+GET         /livredor            controllers.Application.livreDOr(s : String ?= null)
 POST        /livredor            controllers.Application.submitForm()
 
 GET         /tmpImage            controllers.Application.getTmpImage()

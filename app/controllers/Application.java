@@ -32,11 +32,11 @@ public class Application extends Controller {
      * Page de livre d'or sur laquelle on peut prendre une photo et écrire un message.
      * @return
      */
-    public static Result livreDOr(){
+    public static Result livreDOr(final String mode){
         Photo photo = new Photo();
         Form<Photo> photoForm = Form.form(Photo.class).fill(photo);
         try {
-           photoService.takePicture();
+           photoService.takePicture(mode);
         } catch (IOException | InterruptedException e) {
             return badRequest(e.getLocalizedMessage());
         }
@@ -81,7 +81,6 @@ public class Application extends Controller {
 
     public static Result getRandomMessage(){
         Random random = new Random();
-
         String text = Constants.phrases.get(random.nextInt(Constants.phrases.size()));
         return ok(text).as("text");
     }
