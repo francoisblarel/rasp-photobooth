@@ -5,14 +5,11 @@
 # Home page
 GET         /                    controllers.Application.index(s : String ?= "")
 
-GET         /livredor            controllers.Application.livreDOr()
+GET         /livredor            controllers.Application.livreDOr(s : String ?= null)
 POST        /livredor            controllers.Application.submitForm()
 
 GET         /tmpImage            controllers.Application.getTmpImage()
-
-
-#GET        /test/:name          controllers.Application.test1(name)
-#GET        /test2               controllers.Application.test1(name="dfdf")
+GET         /randomText          controllers.Application.getRandomMessage()
 
 
 

@@ -37,8 +37,8 @@ public class PhotoService {
         this.emailSender = new EmailSender();
     }
 
-    public void  takePicture() throws IOException, InterruptedException {
-        pictureSaver.takePicture();
+    public void  takePicture(String mode) throws IOException, InterruptedException {
+        pictureSaver.takePicture(mode);
     }
 
     public void savePicture(final Photo photo) throws IOException {

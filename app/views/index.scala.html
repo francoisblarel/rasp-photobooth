@@ -2,19 +2,34 @@
 
 @main("Photobooth") {
 
-<div class="container">
-        <span>@message</span>
-        @*TODO aperçu des photos des déjà prises*@
+        <span id="info" class="info info-hidden">@message</span>
 
-        @*<form action=@routes.Application.livreDOr() method="get">*@
-            @*<input class="button" id="go" type="submit" value="Prendre une photo!" onclick="timer()">*@
-        @*</form>*@
+        @*TODO aperçu des photos des déjà prises? *@
 
         <div class="buttons">
             <a class="iphoto" href="@routes.Application.livreDOr()">
                 <img src="@routes.Assets.at("images/photo-icon.png")" height="45px">
             </a>
+
+
+            <a id="hardcore" href='@routes.Application.livreDOr("hardcore")'>
+                try me
+            </a>
         </div>
-</div>
+
+
+        <script >
+            var info = "@message";
+            if(info !== "" ){
+               window.setTimeout(function (){
+                    document.getElementById("info").classList.add("info-show");
+               }, 10);
+               window.setTimeout(function (){
+                    document.getElementById("info").classList.remove("info-show");
+                }, 2000);
+            }
+            document.getElementsByClassName("iphoto")[0].focus();
+
+        </script>
 
 }

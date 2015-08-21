@@ -17,8 +17,9 @@ public class MockPictureSaver implements PictureSaver {
 
 
     @Override
-    public void takePicture() throws IOException {
+    public void takePicture(final String mode) throws IOException {
         try {
+            Logger.info("mode : " + mode);
             // determine le taille courante du screen
             Toolkit toolkit = Toolkit.getDefaultToolkit();
             Dimension screenSize = toolkit.getScreenSize();
